@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
 import  { MedicineService} from '../services/medicine.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class MedicineComponent implements OnInit {
   chemistName : string;
   isDoctorDisplay: string;
   
-  constructor(private medicineService: MedicineService ) { }
+  constructor(private medicineService: MedicineService,
+    public authService: AuthService ) { }
 
   ngOnInit() {
     this.userType = localStorage.getItem('userType');

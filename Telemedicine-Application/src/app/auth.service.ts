@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material';
 export class AuthService {
 
   userData: any; // Save logged in user data
-
+  // snackBarRef: MatSnackBar;
   constructor(
     public snackBar: MatSnackBar,
     public afs: AngularFirestore,   // Inject Firestore service
@@ -139,6 +139,7 @@ export class AuthService {
   SignOut() {
     return this.afAuth.auth.signOut().then(() => {
       localStorage.removeItem('result.user');
+      localStorage.removeItem('patient_id')
       localStorage.removeItem('userType')
       this.router.navigate(['login']);
     })

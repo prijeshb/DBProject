@@ -1,5 +1,29 @@
 const {router,database} = require('./commonroute')
 
+
+
+
+// router.get('/all', function(req, res, next) {
+
+//   // const medicineId = req.params.medicineId;
+//   console.log("alllmedicine")
+//   database.table('medicine').
+//   // filter({medicine_id : medicineId }).
+//   getAll().
+//   then(doc => {
+//     // console.log(doc)
+//     if(doc){
+//       res.status(200).json({
+//         medicine: doc
+//       })
+//     }else{
+//       res.json({
+//         error: "not found"
+//       }) 
+//     }
+//   })
+//     // res.send('respond with a resource');
+// });
 router.get('/med/:medicineId', function(req, res, next) {
 
   const medicineId = req.params.medicineId;
@@ -20,6 +44,9 @@ router.get('/med/:medicineId', function(req, res, next) {
   })
     // res.send('respond with a resource');
 });
+
+
+
   router.post('/med/update', function(req, res, next) {
     // const medicineId = req.params.medicineId;
     console.log("sdvnsdlkjnln medicine")

@@ -6,7 +6,7 @@ let conn = new mysql({
     user:'root',
     password:'password',
     db:'telemedicine'
-    
+        
 });
 
 let db= conn.emit(false,'');

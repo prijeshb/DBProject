@@ -8,14 +8,14 @@
   <mat-form-field appearance="fill">
     <mat-label>Appointment with:</mat-label> <!-- updateTimeSelection(Date.value, Doctor.value) -->
     <mat-select #Doctor (selectionChange)="filtertimes(Doctor.value, Date.value)">
-      <mat-option *ngFor="let userdoc of userdoc" [value]="userdoc.doctor" #doctor >{{surname}}{{userdoc.doctor}} - {{userdoc.email}}</mat-option>
+      <mat-option *ngFor="let userdoc of userdoc" [value]="userdoc.id" #doctor >{{surname}}{{userdoc.doctor}} - {{userdoc.email}}</mat-option>
     </mat-select>
   </mat-form-field>
   <br>
   <mat-form-field appearance="fill">
     <mat-label>Chemist :</mat-label> <!-- updateTimeSelection(Date.value, Doctor.value) -->
     <mat-select #Chemist (selectionChange)="filtertimes(Chemist.value, Date.value)">
-      <mat-option *ngFor="let chemist of chemists" [value]="chemist.chemistName" #chemist >{{chemist.Name}}</mat-option>
+      <mat-option *ngFor="let chemists of chemists" [value]="chemists.id" #chemist >{{chemists.chemistName}}</mat-option>
     </mat-select>
   </mat-form-field>
   <br>
@@ -26,6 +26,6 @@
     </mat-select>
   </mat-form-field>
   <br>
-  <div mat-dialog-actions style="float: right;"><button mat-raised-button (click)="[saveAppointment(Date.value, Time.value, Doctor.value, Chemist.value), refresh()]" color="accent">Save</button></div>
+  <div mat-dialog-actions style="float: right;">  <button mat-raised-button (click)="[saveAppointment(Date.value, Time.value, Doctor.value, Chemist.value), refresh()]" color="accent">Save</button></div>
 
 

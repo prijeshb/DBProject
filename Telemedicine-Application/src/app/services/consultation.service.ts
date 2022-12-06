@@ -12,4 +12,7 @@ export class ConsultationService {
   getAllConsultations(patientId){
     return this.http.get(this.server_url + `consultation/${patientId}/all`)
   }
+  updateConsultation(consultData){
+    return this.http.post(this.server_url + `consultation/update/10`,{...consultData})
+  }
 }

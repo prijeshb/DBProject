@@ -15,6 +15,7 @@ const doctor = require('./routes/doctor');
 const consultation = require('./routes/consultation')
 const medicine = require('./routes/medicine')
 const consultationItem = require('./routes/consultationitem');
+const medicineAll = require('./routes/medicineAll');
 // const doctors = require('./routes/doctor');
 
 const app = express();
@@ -39,6 +40,7 @@ app.use('/api/consultationItem', consultationItem);
 app.use('/api/chemist', chemist);
 app.use('/api/patient', patient );
 app.use('/api/medicine', medicine);
+app.use('/api/medicineall', medicineAll);
 // app.use('/api/transaction/:transId', doctors);
 app.use('/api/consultationItem', consultationItem); 
 app.use('/api/consultation', consultation);

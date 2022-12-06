@@ -19,7 +19,7 @@ export class DoctorService {
      return this.http.post(this.server_url + `doctor/${docData.doctor_emailID}`,{...docData});
   }
   getAllDoctors(){
-    return this.http.get(this.server_url+ "doctor/all/")
+    return this.http.get(this.server_url+ "doctor/list/all")
   }
   
 }

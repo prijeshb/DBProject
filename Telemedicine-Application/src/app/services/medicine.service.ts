@@ -11,6 +11,9 @@ export class MedicineService {
   getMedicineData(medId){
     return this.http.get(this.serverl_url + `medicine/med/${medId}`);
   }
+  getAllMedicineData(){
+    return this.http.get(this.serverl_url + `medicineall/`);
+  }
   updateMedData(medData){
     return this.http.post(this.serverl_url + `medicine/med/update`,{...medData});
   }

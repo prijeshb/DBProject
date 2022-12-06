@@ -30,8 +30,14 @@ export interface userapp {
   status: string;
   appointment_id: string;
 }
-
-var ELEMENT_DATA: userapp[] = [
+export interface consultApt {
+  patient_id : string;
+  doctor_id : string;
+  consultation_id: string;
+  chemist_id: string;
+  consultation_date: string;
+}
+var ELEMENT_DATA: consultApt[] = [
 ];
 
 @Component({
@@ -46,7 +52,8 @@ export class HomeComponent implements OnInit {
   displayemail: string;
   isDoctorDisplay:string;
   isDoctor: boolean;
-  displayedColumns: string[] = ['whom', 'date', 'time', 'status', 'cancel', 'text', 'video'];
+  // displayedColumns: string[] = ['whom', 'date', 'time', 'status', 'cancel', 'text', 'video'];
+  displayedColumns: string[] = ['patient_id', 'consultation_date'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   firstandlastname = this.lastNameDisplay + " " + this.firstNameDisplay;
   surname: string;
@@ -207,11 +214,21 @@ export class HomeComponent implements OnInit {
       if(data.consultApts && data.consultApts.length > 1){
         // let consultapts   = data.consultApts.map(apt => {...apt, Date(apt.)})
         consultapts = data.consultApts.sort((a,b) => new Date(a.consultation_date) < new Date(b.consultation_date)  ? -1 : new Date(a.consultation_date) > new Date(b.consultation_date) ?1 : 0 );
-      }else
-        consultapts = data.consultApts
+    }else
+    {
+      consultapts = data.consultApts
+    }
+        
       console.log(consultapts)
       consultapts.map(apt => {
-        ELEMENT_DATA.push(apt)
+        ELEMENT_DATA.push({
+          patient_id:apt.patient_id,
+          chemist_id: apt.chemist_id,
+          consultation_date: apt.consultation_date,
+          consultation_id: apt.consultation_id,
+          doctor_id : apt.doctor_id
+
+        })
         console.log(ELEMENT_DATA)
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
         console.log(this.dataSource)
@@ -302,17 +319,17 @@ export class HomeComponent implements OnInit {
   }
 
   // This method cancels the currently selected appointment.
-  async cancelAppointment(whom, date, time, status) { 
-    for (var i = 0; i < ELEMENT_DATA.length; i++) {
-      if (ELEMENT_DATA[i].whom == whom && ELEMENT_DATA[i].date == date && ELEMENT_DATA[i].time == time && ELEMENT_DATA[i].status == status) {
-        this.afs.collection('appointments').doc(ELEMENT_DATA[i].appointment_id).update({
-          isActive: false,
-        }).catch(function(error) {
-          console.error("Error removing document: ", error);
-        });
-      }
-  }
-}
+//   async cancelAppointment(whom, date, time, status) { 
+//     for (var i = 0; i < ELEMENT_DATA.length; i++) {
+//       if (ELEMENT_DATA[i].whom == whom && ELEMENT_DATA[i].date == date && ELEMENT_DATA[i].time == time && ELEMENT_DATA[i].status == status) {
+//         this.afs.collection('appointments').doc(ELEMENT_DATA[i].appointment_id).update({
+//           isActive: false,
+//         }).catch(function(error) {
+//           console.error("Error removing document: ", error);
+//         });
+//       }
+//   }
+// }
 
   isMenuOpen = true;
   contentMargin = 240;

@@ -8,7 +8,7 @@ import { PatientService } from '../services/patient.service';
 import { DoctorService } from '../services/doctor.service';
 import {ChemistService} from '../services/chemist.service';
 import { ConsultationService } from '../services/consultation.service';
-
+import { MatSnackBar } from '@angular/material';
 
 export interface userdoc {
   doctor: string;
@@ -42,6 +42,7 @@ export class ScheduleappointmentsComponent implements OnInit {
   chemists: chemist[] = [];
   count = 1;
   currentdate = new Date();
+
   /*myFilter = (d: Date): boolean => {
     const day = d.getDay();
     // THIS FUNCTION CANNOT ACCESS THE VARIABLE 'someDateToBlock'
@@ -59,7 +60,9 @@ export class ScheduleappointmentsComponent implements OnInit {
     private patientService : PatientService,
     private doctorService: DoctorService,
     private chemistService: ChemistService,
-    private consultationService: ConsultationService) { }
+    private consultationService: ConsultationService,
+    public snackBar: MatSnackBar) { }
+    
 
   ngOnInit() {
 
@@ -124,12 +127,14 @@ export class ScheduleappointmentsComponent implements OnInit {
 
   fetchuserdata() {
     const userType = localStorage.getItem("userType");
+
     if(userType == "Patient"){
       // console.log("svsddfvfdbafa")
       let user = this.patientService.getPatient(this.displayemail);
       user.subscribe(data => {
         if (data) {
           // this.dis
+          localStorage.setItem('patient_id',data.patient[0].patient_id)
           this.firstNameDisplay = data.patient[0].patient_firstName;
           this.lastNameDisplay = data.patient[0].patient_LastName;
           // if (doc.data().isDoctor == true) {
@@ -254,17 +259,25 @@ export class ScheduleappointmentsComponent implements OnInit {
 
   // Saves the selected appointment data as a document to firebase.
   // Note: The variable "Doctor" is just the person selected for the appointment, and can either be a patient or a doctor.
-  saveAppointment(Date2, Time, Doctor, chemist) {
-    var timestamp = new Date(Date2 + " " + this.findMilitaryValue(Time))
+  saveAppointment(Date2, Time, doctor_id, chemist_id) {
+    var timestamp = new Date(Date2 + " " + this.findMilitaryValue(Time));
     // let id = this.afs.createId()
-    console.log(chemist)
-    for (var i = 0; i < this.userdoc.length; i++) {
-      if (this.userdoc[i].doctor == Doctor)
-      {
-        var receiverid = this.userdoc[i].uid;
-        var receiveremail = this.userdoc[i].email;
-      }
-    }
+    const patient_id = localStorage.getItem("patient_id");
+    // console.log(Date2,  `${timestamp.getFullYear()}-${timestamp.getMonth()}-${timestamp.getDate()}`, doctor_id, chemist_id)
+    // this.consultationService.updateConsultation({
+    //   chemist_id: chemist_id,
+    //   patient_id: patient_id,
+    //   doctor_id: doctor_id,
+    //   consultation_date:timestamp
+    // })
+
+    // for (var i = 0; i < this.userdoc.length; i++) {
+    //   if (this.userdoc[i].doctor == Doctor)
+    //   {
+    //     var receiverid = this.userdoc[i].uid;
+    //     var receiveremail = this.userdoc[i].email;
+    //   }
+    // }
     // this.consultationService.setConsultationAppointment({
 
     // })
@@ -281,13 +294,18 @@ export class ScheduleappointmentsComponent implements OnInit {
     //   receiver: Doctor,
     //   timestamp: timestamp
     // });
-    this.dialogRef.close();
+    if(Date2 && Time && doctor_id && chemist_id)
+      this.dialogRef.close();
+    else
+      {
+        let snackBarRef = this.snackBar.open('please select all values', 'Dismiss', {duration: 4000});
+      }
   }
 
   refresh() {
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 500);
   }
 
 

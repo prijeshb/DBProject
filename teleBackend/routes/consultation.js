@@ -19,26 +19,26 @@ router.get('/:patientId/all', function(req, res, next) {
     }
   }).catch(err => console.log(err))
   });
-router.post('/:consultID', function(req, res, next) {
-  const consultID = req.params.consultID;
+
+router.post('/update/:id', function(req, res, next) {
+  // const consultID = req.params.consultID;
   const consultApt = req.body;
-  console.log(consultID,consultApt);
+  console.log(consultApt);
   database.
   table('consultation').
-  filter({doctor_emailID:docEmail}).
-  create({
+  // filter({doctor_emailID:docEmail}).
+  insert({
     // patient_id: updatedPatient.displayuid,
-    doctor_emailID: updatedDoc.doctor_emailID ,
-    doctor_firstName: updatedDoc.doctor_firstName,
-    doctor_lastName: updatedDoc.doctor_lastName,
-    doctor_specialization: updatedDoc.doctor_specialization,
-    doctor_availability: updatedDoc.doctor_availability,
-    doctor_fees: updatedDoc.doctor_fees,
-    doctor_phoneNumber: updatedDoc.doctor_phoneNumber,
-    total_earnings: updatedDoc.total_earnings,
-    doctor_address: updatedDoc.doctor_address
+    consultation_date: consultApt.consultation_date ,
+    doctor_id: consultApt.doctor_id,
+    chemist_id: consultApt.chemist_id,
+    patient_id: consultApt.patient_id,
+    consultation_id: consultApt.consultation_id
+
   })
   .catch(err => console.log(err))
-  // res.json({s})
+  res.json({
+    success:"created"
+  })
 })
     module.exports = router;
